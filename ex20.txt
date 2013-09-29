@@ -1,3 +1,5 @@
 Dette er filen som skal åpnes!
 Ingenting...
 Her kommer det en ny verden av morsomheter!
+Denne linjen skal ikke vises
+denne linjen skal vises, hihihihi
