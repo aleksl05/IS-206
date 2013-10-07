@@ -5,6 +5,9 @@ notebook = []
 class Notebook():
 	
 	
+	def __init__(self):
+		pass
+	
 	def checkBook(self):
 		if len(notebook) == 0:
 			print "There is nothing in the notebook"
@@ -12,9 +15,9 @@ class Notebook():
 			print notebook
 			
 	def addbook(self, note):
-		notebook.append(note)
+			notebook.append(note)
 
-class Scene(object):
+class Scene(object, Notebook):
 
 	def enter(self):
 		print "This scene is not yet configured. Subclass it and implement enter()."
@@ -37,70 +40,76 @@ class Engine(object):
 			
 
 		
-class Death(Scene):
+class Hall(Scene):
 	
-	quips = [
-		"You died. You kinda suck at this.",
-		"Your mom would be proud...if she were smarter.",
-		"Such a loser.",
-		"I have a small puppy that's better at this."
-	]
-	
-	def enter(self):
-		print Death.quips[randint(0, len(self.quips)-1)]
-		exit(1)
-		
-class CentralCorridor(Scene, Notebook):
-
 	notebook = Notebook()
-
 	def enter(self):
-		print "The Gothons of Planet Percal #25 have invaded your ship and destroyed"
-		print "your entire crew.  You are the last surviving member and your last"
-		print "mission is to get the neutron destruct bomb from the Weapons Armory,"
-		print "put it in the bridge, and blow the ship up after getting into an "
-		print "escape pod."
-		print "\n"
-		print "You're running down the central corridor to the Weapons Armory when"
-		print "a Gothon jumps out, red scaly skin, dark grimy teeth, and evil clown costume"
-		print "flowing around his hate filled body.  He's blocking the door to the"
-		print "Armory and about to pull a weapon to blast you."
-
+		print "You have entered a house, the mission is to check"
+		print "every room and collect letters to guess a word."
+		print "You can store letters in your notebook with 'save letters'"
+		print "In this room there are three letters, type 'letter' to show them"
+		
+		letters = ['p', 'y', 't']
 		action = raw_input("> ")
-
-		if action == "shoot!":
-			print "Quick on the draw you yank out your blaster and fire it at the Gothon."
-			print "His clown costume is flowing and moving around his body, which throws"
-			print "off your aim.  Your laser hits his costume but misses him entirely.  This"
-			print "completely ruins his brand new costume his mother bought him, which"
-			print "makes him fly into an insane rage and blast you repeatedly in the face until"
-			print "you are dead.  Then he eats you."
-			return 'death'
-
 			
-		elif action == "dodge!":
-			print "Like a world class boxer you dodge, weave, slip and slide right"
-			print "as the Gothon's blaster cranks a laser past your head."
-			print "In the middle of your artful dodge your foot slips and you"
-			print "bang your head on the metal wall and pass out."
-			print "You wake up shortly after only to die as the Gothon stomps on"
-			print "your head and eats you."
-			return 'death'
-
-		elif action == "tell a joke":
-			print "Lucky for you they made you learn Gothon insults in the academy."
-			print "You tell the one Gothon joke you know:"
-			print "Lbhe zbgure vf fb sng, jura fur fvgf nebhaq gur ubhfr, fur fvgf nebhaq gur ubhfr."
-			print "The Gothon stops, tries not to laugh, then busts out laughing and can't move."
-			print "While he's laughing you run up and shoot him square in the head"
-			print "putting him down, then jump through the Weapon Armory door."
-			return 'laser_weapon_armory'
-		
-		
-
+		if action == "letter":
+			print letters
+		elif action == "check notebook":
+			self.notebook.checkBook()
+		elif action == "store letters":
+			self.notebook.addbook(letters)
+			print "Letters are now stored in your notebook"
+		elif action == "next room":
+			return 'kitchen'
 		else:
-			print "DOES NOT COMPUTE!"
-			return 'central_corridor'
+			print "Please choose one of the commands"
+		
+class CentralCorridor(Scene):
+
+    def enter(self):
+        print "The Gothons of Planet Percal #25 have invaded your ship and destroyed"
+        print "your entire crew.  You are the last surviving member and your last"
+        print "mission is to get the neutron destruct bomb from the Weapons Armory,"
+        print "put it in the bridge, and blow the ship up after getting into an "
+        print "escape pod."
+        print "\n"
+        print "You're running down the central corridor to the Weapons Armory when"
+        print "a Gothon jumps out, red scaly skin, dark grimy teeth, and evil clown costume"
+        print "flowing around his hate filled body.  He's blocking the door to the"
+        print "Armory and about to pull a weapon to blast you."
+
+        action = raw_input("> ")
+
+        if action == "shoot!":
+            print "Quick on the draw you yank out your blaster and fire it at the Gothon."
+            print "His clown costume is flowing and moving around his body, which throws"
+            print "off your aim.  Your laser hits his costume but misses him entirely.  This"
+            print "completely ruins his brand new costume his mother bought him, which"
+            print "makes him fly into an insane rage and blast you repeatedly in the face until"
+            print "you are dead.  Then he eats you."
+            return 'hall'
+
+        elif action == "dodge!":
+            print "Like a world class boxer you dodge, weave, slip and slide right"
+            print "as the Gothon's blaster cranks a laser past your head."
+            print "In the middle of your artful dodge your foot slips and you"
+            print "bang your head on the metal wall and pass out."
+            print "You wake up shortly after only to die as the Gothon stomps on"
+            print "your head and eats you."
+            return 'hall'
+
+        elif action == "tell a joke":
+            print "Lucky for you they made you learn Gothon insults in the academy."
+            print "You tell the one Gothon joke you know:"
+            print "Lbhe zbgure vf fb sng, jura fur fvgf nebhaq gur ubhfr, fur fvgf nebhaq gur ubhfr."
+            print "The Gothon stops, tries not to laugh, then busts out laughing and can't move."
+            print "While he's laughing you run up and shoot him square in the head"
+            print "putting him down, then jump through the Weapon Armory door."
+            return 'laser_weapon_armory'
+
+        else:
+            print "DOES NOT COMPUTE!"
+            return 'central_corridor'
 		
 class LaserWeaponArmory(Scene):
 
@@ -138,7 +147,7 @@ class LaserWeaponArmory(Scene):
 			print "melting sound as the mechanism is fused together."
 			print "You decide to sit there, and finally the Gothons blow up the"
 			print "ship from their ship and you die."
-			return 'death'
+			return 'hall'
 		
 
 class TheBridge(Scene):
@@ -160,7 +169,7 @@ class TheBridge(Scene):
             print "As you die you see another Gothon frantically try to disarm"
             print "the bomb. You die knowing they will probably blow up when"
             print "it goes off."
-            return 'death'
+            return 'hall'
 
         elif action == "slowly place the bomb":
             print "You point your blaster at the bomb under your arm"
@@ -189,7 +198,7 @@ class EscapePod(Scene):
         print "but you don't have time to look.  There's 5 pods, which one"
         print "do you take?"
 
-        good_pod = randint(1,2)
+        good_pod = randint(1,5)
         guess = raw_input("[pod #]> ")
 
 
@@ -198,7 +207,7 @@ class EscapePod(Scene):
             print "The pod escapes out into the void of space, then"
             print "implodes as the hull ruptures, crushing your body"
             print "into jam jelly."
-            return 'death'
+            return 'hall'
         else:
             print "You jump into pod %s and hit the eject button." % guess
             print "The pod easily slides out into space heading to"
@@ -213,11 +222,11 @@ class EscapePod(Scene):
 class Map(object):
 
 	scenes = { 
-		'central_corridor': CentralCorridor(),
+		'hall': Hall(),
 		'laser_weapon_armory': LaserWeaponArmory(),
 		'the_bridge': TheBridge(),
 		'escape_pod': EscapePod(),
-		'death': Death()
+		
 	}
 	
 	def __init__(self, start_scene):
@@ -229,6 +238,6 @@ class Map(object):
 	def opening_scene(self):
 		return self.next_scene(self.start_scene)
 		
-a_map = Map('central_corridor')
+a_map = Map('hall')
 a_game = Engine(a_map)
 a_game.play()

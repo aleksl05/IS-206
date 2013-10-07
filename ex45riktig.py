@@ -2,17 +2,18 @@ from sys import exit
 from random import randint
 
 notebook = []
-class Notebook():
-	
-	
-	def checkBook(self):
-		if len(notebook) == 0:
-			print "There is nothing in the notebook"
-		else:
-			print notebook
-			
-	def addbook(self, note):
-		notebook.append(note)
+
+def checkbook():
+	if len(notebook) == 0:
+		print "There is nothing in the notebook!"
+	else:
+		print "The letters in your notebook is: ", notebook
+		
+	raw_input("Press enter when finished")
+		
+def addbook(note):
+	notebook.append(note)
+	raw_input("Your letters are added, press enter when finished")
 
 class Scene(object):
 
@@ -50,9 +51,8 @@ class Death(Scene):
 		print Death.quips[randint(0, len(self.quips)-1)]
 		exit(1)
 		
-class CentralCorridor(Scene, Notebook):
+class CentralCorridor(Scene):
 
-	notebook = Notebook()
 
 	def enter(self):
 		print "The Gothons of Planet Percal #25 have invaded your ship and destroyed"
@@ -95,9 +95,9 @@ class CentralCorridor(Scene, Notebook):
 			print "While he's laughing you run up and shoot him square in the head"
 			print "putting him down, then jump through the Weapon Armory door."
 			return 'laser_weapon_armory'
-		
-		
-
+		elif action == "notebook":
+			checkbook()
+			return 'central_corridor'
 		else:
 			print "DOES NOT COMPUTE!"
 			return 'central_corridor'
@@ -189,7 +189,7 @@ class EscapePod(Scene):
         print "but you don't have time to look.  There's 5 pods, which one"
         print "do you take?"
 
-        good_pod = randint(1,2)
+        good_pod = randint(1,5)
         guess = raw_input("[pod #]> ")
 
 
